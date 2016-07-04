@@ -3,9 +3,11 @@ package android.example.com.productsinventory.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.example.com.productsinventory.MainActivity;
+import android.example.com.productsinventory.activities.MainActivity;
 import android.example.com.productsinventory.R;
 import android.example.com.productsinventory.data.Product;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +36,7 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
         TextView productInfo;
         TextView productQuantity;
         Button sellItem;
+        ImageView ivProductImage;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -41,6 +44,7 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
             productInfo = (TextView) itemView.findViewById(R.id.tvProductInfo);
             productQuantity = (TextView) itemView.findViewById(R.id.tvQuantity);
             sellItem = (Button) itemView.findViewById(R.id.btnSell);
+            ivProductImage = (ImageView) itemView.findViewById(R.id.ivProductImage);
         }
     }
 
@@ -55,6 +59,12 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
 
         holder.productInfo.setText(products.get(position).getName() + " - $" + products.get(position).getPrice());
         holder.productQuantity.setText("Quantity available: " + String.valueOf(products.get(position).getQuantity()));
+
+        byte[] productImg = products.get(position).getImage();
+
+        Bitmap bmp = BitmapFactory.decodeByteArray(productImg, 0, productImg.length);
+
+        holder.ivProductImage.setImageBitmap(bmp);
 
         holder.cv.setOnClickListener(new View.OnClickListener() {
 

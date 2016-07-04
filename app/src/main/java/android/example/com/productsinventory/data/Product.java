@@ -53,4 +53,8 @@ public class Product {
     public String getSupplier() {
         return supplier;
     }
+
+    public byte[] getImage() {
+        return image;
+    }
 }

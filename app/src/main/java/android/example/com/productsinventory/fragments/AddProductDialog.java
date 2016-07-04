@@ -1,8 +1,10 @@
-package android.example.com.productsinventory;
+package android.example.com.productsinventory.fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.example.com.productsinventory.R;
+import android.example.com.productsinventory.activities.MainActivity;
 import android.example.com.productsinventory.data.Product;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;

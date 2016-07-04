@@ -1,15 +1,15 @@
-package android.example.com.productsinventory;
+package android.example.com.productsinventory.activities;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.example.com.productsinventory.fragments.AddProductDialog;
+import android.example.com.productsinventory.R;
 import android.example.com.productsinventory.adapters.ProductsRecyclerAdapter;
 import android.example.com.productsinventory.data.Product;
 import android.example.com.productsinventory.data.source.ProductsContract;
 import android.example.com.productsinventory.data.source.ProductsDbHelper;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +21,6 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,10 +56,6 @@ public class MainActivity extends AppCompatActivity {
         if (recyclerView != null) {
             recyclerView.setAdapter(productsAdapter);
         }
-
-
-
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             values.put(ProductsContract.ProductEntry.COLUMN_NAME_PRICE, product.getPrice());
             values.put(ProductsContract.ProductEntry.COLUMN_NAME_QUANTITY, product.getQuantity());
             values.put(ProductsContract.ProductEntry.COLUMN_NAME_SUPPLIER, product.getSupplier());
+            values.put(ProductsContract.ProductEntry.COLUMN_NAME_IMAGE, product.getImage());
 
             newHabitId1 = mDbHelper.insertProduct(values);
 
@@ -158,8 +154,10 @@ public class MainActivity extends AppCompatActivity {
                 String productName = c.getString(c.getColumnIndexOrThrow(ProductsContract.ProductEntry.COLUMN_NAME_PRODUCT));
                 double price = c.getDouble(c.getColumnIndexOrThrow(ProductsContract.ProductEntry.COLUMN_NAME_PRICE));
                 int quantity =  c.getInt(c.getColumnIndexOrThrow(ProductsContract.ProductEntry.COLUMN_NAME_QUANTITY));
+                String supplier = c.getString(c.getColumnIndexOrThrow(ProductsContract.ProductEntry.COLUMN_NAME_SUPPLIER));
+                byte[] imageByte = c.getBlob(c.getColumnIndexOrThrow(ProductsContract.ProductEntry.COLUMN_NAME_IMAGE));
 
-                Product product = new Product(entryId, productName, price, quantity);
+                Product product = new Product(entryId, productName, price, quantity, supplier, imageByte);
                 productsList.add(product);
             }
         }

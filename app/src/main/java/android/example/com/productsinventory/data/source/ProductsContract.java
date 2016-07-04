@@ -13,6 +13,8 @@ public class ProductsContract {
         public static final String COLUMN_NAME_PRICE = "price";
         public static final String COLUMN_NAME_QUANTITY = "quantity";
         public static final String COLUMN_NAME_SUPPLIER = "supplier";
+        public static final String COLUMN_NAME_IMAGE = "image";
+
         public static String COLUMN_NAME_NULLABLE = null;
 
     }

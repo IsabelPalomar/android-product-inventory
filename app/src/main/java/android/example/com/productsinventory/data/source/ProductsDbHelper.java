@@ -20,15 +20,18 @@ public class ProductsDbHelper extends SQLiteOpenHelper {
 
     private static final String INTEGER_TYPE = " INTEGER";
 
+    private static final String BLOB_TYPE = " BLOB";
+
     private static final String COMMA_SEP = ",";
 
     private static final String SQL_CREATE_PRODUCTS_TABLE =
             "CREATE TABLE " + ProductsContract.ProductEntry.TABLE_NAME + " (" +
                     ProductsContract.ProductEntry.COLUMN_NAME_ENTRY_ID + INTEGER_PK + COMMA_SEP +
                     ProductsContract.ProductEntry.COLUMN_NAME_PRODUCT + TEXT_TYPE + COMMA_SEP +
-                    ProductsContract.ProductEntry.COLUMN_NAME_PRICE + TEXT_TYPE + COMMA_SEP +
+                    ProductsContract.ProductEntry.COLUMN_NAME_PRICE + REAL_TYPE + COMMA_SEP +
                     ProductsContract.ProductEntry.COLUMN_NAME_QUANTITY + INTEGER_TYPE + COMMA_SEP +
-                    ProductsContract.ProductEntry.COLUMN_NAME_SUPPLIER + TEXT_TYPE +
+                    ProductsContract.ProductEntry.COLUMN_NAME_SUPPLIER + TEXT_TYPE + COMMA_SEP +
+                    ProductsContract.ProductEntry.COLUMN_NAME_IMAGE + BLOB_TYPE +
                     " )";
 
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + ProductsContract.ProductEntry.TABLE_NAME;
@@ -66,6 +69,8 @@ public class ProductsDbHelper extends SQLiteOpenHelper {
                 ProductsContract.ProductEntry.COLUMN_NAME_PRODUCT,
                 ProductsContract.ProductEntry.COLUMN_NAME_PRICE,
                 ProductsContract.ProductEntry.COLUMN_NAME_QUANTITY,
+                ProductsContract.ProductEntry.COLUMN_NAME_SUPPLIER,
+                ProductsContract.ProductEntry.COLUMN_NAME_IMAGE,
 
         };
 
@@ -93,21 +98,12 @@ public class ProductsDbHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //db.execSQL(SQL_DELETE_ENTRIES);
-        //db.execSQL(SQL_CREATE_PRODUCTS_TABLE);
-
-
         long newRowId;
-
-        System.out.println(values);
 
         newRowId = db.insert(
                 ProductsContract.ProductEntry.TABLE_NAME,
                 ProductsContract.ProductEntry.COLUMN_NAME_NULLABLE,
                 values);
-
-        System.out.println(newRowId);
-
 
         return newRowId;
     }

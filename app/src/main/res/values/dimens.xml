@@ -7,5 +7,6 @@
     <dimen name="activity_default_padding">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="row_height">95dp</dimen>
+    <dimen name="image_size">100dp</dimen>
 
 </resources>

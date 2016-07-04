@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="@dimen/activity_small_margin">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cvProduct"
@@ -14,27 +14,34 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/activity_default_padding">
 
+            <ImageView
+                android:id="@+id/ivProductImage"
+                android:layout_width="@dimen/image_size"
+                android:layout_height="@dimen/image_size"
+                android:layout_margin="@dimen/activity_small_margin" />
+
             <TextView
                 android:id="@+id/tvProductInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/ivProductImage"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/tvQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvProductInfo"/>
+                android:layout_below="@+id/tvProductInfo"
+                android:layout_toRightOf="@+id/ivProductImage"/>
 
             <Button
                 android:id="@+id/btnSell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
                 android:text="Sale"
-                android:layout_marginRight="@dimen/activity_small_margin" />
+                android:layout_alignBottom="@+id/ivProductImage"
+                android:layout_toRightOf="@+id/ivProductImage"
+                android:layout_marginLeft="@dimen/activity_small_margin"/>
 
         </RelativeLayout>
 
