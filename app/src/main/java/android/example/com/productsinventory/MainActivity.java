@@ -9,6 +9,7 @@ import android.example.com.productsinventory.data.source.ProductsDbHelper;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +24,10 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    ProductsDbHelper mDbHelper;
+    ProductsRecyclerAdapter productsAdapter;
     private List<Product> products;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +37,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ProductsDbHelper mDbHelper = new ProductsDbHelper(this);
+        mDbHelper = new ProductsDbHelper(this);
 
         //insertValue(mDbHelper);
 
-        products = getAllElements(mDbHelper);
+        products = getAllElements();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvProducts);
+        recyclerView = (RecyclerView) findViewById(R.id.rvProducts);
         LinearLayoutManager llm = new LinearLayoutManager(this);
 
         if (recyclerView != null) {
@@ -48,12 +52,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Creates a new a instance of PlacesRecyclerAdapter, passing the current context and the list of products
-        ProductsRecyclerAdapter adapter = new ProductsRecyclerAdapter(this, products);
+        productsAdapter = new ProductsRecyclerAdapter(this, products);
         if (recyclerView != null) {
-            recyclerView.setAdapter(adapter);
+            recyclerView.setAdapter(productsAdapter);
         }
 
-        //System.out.println(products);
+
 
 
 
@@ -61,12 +65,18 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                showAddDialog();
+
             }
         });
 
 
+    }
+
+    private void showAddDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        AddProductDialog editNameDialog = new AddProductDialog();
+        editNameDialog.show(fm, "fragment_edit_name");
     }
 
     @Override
@@ -112,19 +122,17 @@ public class MainActivity extends AppCompatActivity {
     private ContentValues generateRandomValue() {
 
         ContentValues values = new ContentValues();
-        Random r = new Random();
-        int randomNum = r.nextInt(365 - 1 + 1) + 1;
 
-        values.put(ProductsContract.ProductEntry.COLUMN_NAME_PRODUCT, "Red t-shirt");
-        values.put(ProductsContract.ProductEntry.COLUMN_NAME_PRICE, 17);
-        values.put(ProductsContract.ProductEntry.COLUMN_NAME_QUANTITY, 1);
-        values.put(ProductsContract.ProductEntry.COLUMN_NAME_SUPPLIER, "Clothes Inc");
+        values.put(ProductsContract.ProductEntry.COLUMN_NAME_PRODUCT, "Blue t-shirt");
+        values.put(ProductsContract.ProductEntry.COLUMN_NAME_PRICE, 15.5);
+        values.put(ProductsContract.ProductEntry.COLUMN_NAME_QUANTITY, 10);
+        values.put(ProductsContract.ProductEntry.COLUMN_NAME_SUPPLIER, "Urban Outfitters");
 
         return values;
     }
 
 
-    private List<Product> getAllElements(ProductsDbHelper mDbHelper) {
+    private List<Product> getAllElements() {
 
         List<Product> productsList  = new ArrayList<>();
 
@@ -149,4 +157,21 @@ public class MainActivity extends AppCompatActivity {
 
         return productsList;
     }
+
+    public void updateProductQuantity(int productId, int newQuantity) {
+        int rowsUpdated = 0;
+
+        try {
+            rowsUpdated = mDbHelper.updateQuantityById(productId, newQuantity);
+            if(rowsUpdated > 0){
+                products = getAllElements();
+                productsAdapter.refreshList(products);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

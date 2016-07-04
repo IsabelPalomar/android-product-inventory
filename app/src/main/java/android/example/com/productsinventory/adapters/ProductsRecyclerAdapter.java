@@ -51,7 +51,8 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
     }
 
     @Override
-    public void onBindViewHolder(ProductsRecyclerAdapter.ProductViewHolder holder, int position) {
+    public void onBindViewHolder(ProductsRecyclerAdapter.ProductViewHolder holder, final int position) {
+
         holder.productInfo.setText(products.get(position).getName() + " - $" + products.get(position).getPrice());
         holder.productQuantity.setText("Quantity available: " + String.valueOf(products.get(position).getQuantity()));
 
@@ -69,30 +70,29 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
 
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                final AlertDialog.Builder alert = new AlertDialog.Builder(context);
 
-                alert.setTitle("Select the value: ");
+                alert.setTitle("Select the quantity: ");
 
-                NumberPicker np = new NumberPicker(context);
-                String[] nums = new String[100];
-                for(int i=0; i<nums.length; i++)
-                    nums[i] = Integer.toString(i);
 
+                final NumberPicker np = new NumberPicker(context);
                 np.setMinValue(1);
-                np.setMaxValue(nums.length-1);
-                np.setWrapSelectorWheel(false);
-                np.setDisplayedValues(nums);
-                np.setValue(50);
+                np.setMaxValue(products.get(position).getQuantity());
+                np.setValue(1);
 
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // Do something with value!
+                        int pickedValue = np.getValue();
+                        int newQuantity = (products.get(position).getQuantity()) - pickedValue;
+                        int productId = (products.get(position).getId());
+                        ((MainActivity)context).updateProductQuantity(productId, newQuantity);
+
                     }
                 });
 
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // Cancel.
+
                     }
                 });
 
@@ -117,5 +117,15 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    public void refreshList(List<Product> newList) {
+        if (products != null) {
+            products.clear();
+            products.addAll(newList);
+        } else {
+            products = newList;
+        }
+        notifyDataSetChanged();
+
+    }
 
 }

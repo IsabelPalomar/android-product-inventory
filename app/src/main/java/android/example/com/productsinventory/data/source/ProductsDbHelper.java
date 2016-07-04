@@ -113,4 +113,24 @@ public class ProductsDbHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Update specific element from a Database
+     */
+    public int updateQuantityById(int productId, int newQuantity) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ProductsContract.ProductEntry.COLUMN_NAME_QUANTITY, newQuantity);
+
+        String selection = ProductsContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
+        String[] selectionArgs = {String.valueOf(productId)};
+
+        int count = db.update(
+                ProductsContract.ProductEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        return count;
+    }
 }
