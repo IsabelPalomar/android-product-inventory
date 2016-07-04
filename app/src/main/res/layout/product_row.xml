@@ -29,11 +29,11 @@
 
             <Button
                 android:id="@+id/btnSell"
-                android:layout_width="@dimen/row_height"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="Track sale"
+                android:text="Sale"
                 android:layout_marginRight="@dimen/activity_small_margin" />
 
         </RelativeLayout>

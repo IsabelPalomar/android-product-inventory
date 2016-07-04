@@ -9,6 +9,7 @@ import android.example.com.productsinventory.data.source.ProductsDbHelper;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,9 +25,9 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    ProductsDbHelper mDbHelper;
-    ProductsRecyclerAdapter productsAdapter;
-    private List<Product> products;
+    static ProductsDbHelper mDbHelper;
+    static ProductsRecyclerAdapter productsAdapter;
+    private static List<Product> products;
     RecyclerView recyclerView;
 
     @Override
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         AddProductDialog editNameDialog = new AddProductDialog();
         editNameDialog.show(fm, "fragment_edit_name");
+
     }
 
     @Override
@@ -104,11 +106,23 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Insert new value
      */
-    public long insertValue(ProductsDbHelper mDbHelper){
+    public static long insertValue(Product product){
         long newHabitId1 = 0;
 
         try{
-            newHabitId1 = mDbHelper.insertProduct(generateRandomValue());
+
+            ContentValues values = new ContentValues();
+            values.put(ProductsContract.ProductEntry.COLUMN_NAME_PRODUCT, product.getName());
+            values.put(ProductsContract.ProductEntry.COLUMN_NAME_PRICE, product.getPrice());
+            values.put(ProductsContract.ProductEntry.COLUMN_NAME_QUANTITY, product.getQuantity());
+            values.put(ProductsContract.ProductEntry.COLUMN_NAME_SUPPLIER, product.getSupplier());
+
+            newHabitId1 = mDbHelper.insertProduct(values);
+
+            if(newHabitId1 > 0){
+                refreshProductsList();
+            }
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -132,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private List<Product> getAllElements() {
+    private static List<Product> getAllElements() {
 
         List<Product> productsList  = new ArrayList<>();
 
@@ -164,13 +178,18 @@ public class MainActivity extends AppCompatActivity {
         try {
             rowsUpdated = mDbHelper.updateQuantityById(productId, newQuantity);
             if(rowsUpdated > 0){
-                products = getAllElements();
-                productsAdapter.refreshList(products);
+                refreshProductsList();
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static void refreshProductsList(){
+        products = getAllElements();
+        productsAdapter.refreshList(products);
     }
 
 
