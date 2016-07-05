@@ -25,10 +25,10 @@ import java.io.ByteArrayOutputStream;
 
 public class AddProductDialog extends DialogFragment{
 
+    View view;
+    Resources res;
     private ImageView ivProductName;
     private static int RESULT_LOAD_IMAGE = 1;
-    Resources res;
-    View view;
 
     public AddProductDialog() {
         // Empty constructor required for DialogFragment
@@ -44,34 +44,28 @@ public class AddProductDialog extends DialogFragment{
         Button btnSelectImage = (Button) view.findViewById(R.id.btnProductImage);
         ivProductName = (ImageView) view.findViewById(R.id.ivProductImage);
 
-        builder.setView(view);
-        builder.setTitle(res.getString(R.string.app_message_addProduct_title));
-
         btnSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
-
             }
         });
 
-        builder.setPositiveButton(res.getString(R.string.app_message_save),
-                new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                    }
-                });
-
-        builder.setNegativeButton(res.getString(R.string.app_message_cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        getDialog().dismiss();
-                    }
-                }
-        );
+        builder.setView(view)
+                .setTitle(res.getString(R.string.app_message_addProduct_title))
+                .setPositiveButton(res.getString(R.string.app_message_save),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                .setNegativeButton(res.getString(R.string.app_message_cancel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                getDialog().dismiss();
+                            }
+                        });
 
         return builder.create();
     }
@@ -168,17 +162,16 @@ public class AddProductDialog extends DialogFragment{
 
     /**
      * Scale image
-     * @return
      */
     public static Bitmap scaleBitmap(Bitmap bitmapToScale, float newWidth, float newHeight) {
         if (bitmapToScale == null)
             return null;
+
         int width = bitmapToScale.getWidth();
         int height = bitmapToScale.getHeight();
         Matrix matrix = new Matrix();
 
         matrix.postScale(newWidth / width, newHeight / height);
-
         return Bitmap.createBitmap(bitmapToScale, 0, 0, bitmapToScale.getWidth(), bitmapToScale.getHeight(), matrix, true);
     }
 
@@ -192,6 +185,6 @@ public class AddProductDialog extends DialogFragment{
             Uri selectedImage = data.getData();
             ivProductName.setImageURI(selectedImage);
         }
-
     }
+
 }

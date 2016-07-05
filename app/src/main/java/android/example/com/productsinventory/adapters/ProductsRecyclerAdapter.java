@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.example.com.productsinventory.activities.DetailActivity;
 import android.example.com.productsinventory.activities.MainActivity;
 import android.example.com.productsinventory.R;
 import android.example.com.productsinventory.data.Product;
+import android.example.com.productsinventory.utils.Constants;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
@@ -26,6 +28,7 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
 
     List<Product> products;
     Context context;
+    Resources res;
 
     public ProductsRecyclerAdapter(Context con, List<Product> products) {
         this.products = products;
@@ -42,6 +45,7 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
 
         public ProductViewHolder(View itemView) {
             super(itemView);
+            res =  context.getResources();
             cv = (CardView) itemView.findViewById(R.id.cvProduct);
             productInfo = (TextView) itemView.findViewById(R.id.tvProductInfo);
             productQuantity = (TextView) itemView.findViewById(R.id.tvQuantity);
@@ -59,13 +63,11 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
     @Override
     public void onBindViewHolder(ProductsRecyclerAdapter.ProductViewHolder holder, final int position) {
 
-        holder.productInfo.setText(products.get(position).getName() + " - $" + products.get(position).getPrice());
-        holder.productQuantity.setText("Quantity available: " + String.valueOf(products.get(position).getQuantity()));
+        holder.productInfo.setText(String.format(res.getString(R.string.app_message_productInfo), products.get(position).getName(), products.get(position).getPrice()));
+        holder.productQuantity.setText(String.format(res.getString(R.string.app_message_productQty), products.get(position).getQuantity()));
 
         byte[] productImg = products.get(position).getImage();
-
         Bitmap bmp = BitmapFactory.decodeByteArray(productImg, 0, productImg.length);
-
         holder.ivProductImage.setImageBitmap(bmp);
 
         holder.cv.setOnClickListener(new View.OnClickListener() {
@@ -73,47 +75,45 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("productId", products.get(position).getId());
+                intent.putExtra(Constants.PRODUCT_ID_EXTRA, products.get(position).getId());
                 context.startActivity(intent);
-
-            }
-
-        });
-
-        holder.sellItem.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder alert = new AlertDialog.Builder(context);
-
-                alert.setTitle("Select the quantity: ");
-
-
-                final NumberPicker np = new NumberPicker(context);
-                np.setMinValue(1);
-                np.setMaxValue(products.get(position).getQuantity());
-                np.setValue(1);
-
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        int pickedValue = np.getValue();
-                        int newQuantity = (products.get(position).getQuantity()) - pickedValue;
-                        int productId = (products.get(position).getId());
-                        ((MainActivity)context).updateProductQuantity(productId, newQuantity);
-
-                    }
-                });
-
-                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                    }
-                });
-
-                alert.setView(np);
-                alert.show();
             }
         });
+
+        if( products.get(position).getQuantity() != 0 ){
+            holder.sellItem.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    final AlertDialog.Builder alert = new AlertDialog.Builder(context);
+
+                    final NumberPicker np = new NumberPicker(context);
+                    np.setMinValue(1);
+                    np.setMaxValue(products.get(position).getQuantity());
+                    np.setValue(1);
+
+                    alert.setTitle(res.getString(R.string.app_message_saleProduct_title))
+                            .setPositiveButton(res.getString(R.string.app_message_sale), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    int pickedValue = np.getValue();
+                                    int newQuantity = (products.get(position).getQuantity()) - pickedValue;
+                                    int productId = (products.get(position).getId());
+                                    ((MainActivity) context).updateProductQuantity(productId, newQuantity);
+                                }
+                            })
+                            .setNegativeButton(res.getString(R.string.app_message_cancel), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                }
+                            });
+
+                    alert.setView(np);
+                    alert.show();
+                }
+            });
+        }
+        else{
+            holder.sellItem.setVisibility(View.GONE);
+        }
 
     }
 
@@ -139,7 +139,6 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
             products = newList;
         }
         notifyDataSetChanged();
-
     }
 
 }

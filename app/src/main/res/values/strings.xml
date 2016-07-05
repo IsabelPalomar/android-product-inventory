@@ -20,15 +20,22 @@
     <string name="app.message.productQty.updated">Product quantity updated!</string>
     <string name="app.message.productQty.error">Error trying to update the product quantity</string>
 
-    <string name="app.message.addProduct.title">Add New Product</string>
     <string name="app.message.addProduct.validation">Insert</string>
     <string name="app.message.addProduct.name">" name"</string>
     <string name="app.message.addProduct.price">" price"</string>
     <string name="app.message.addProduct.quantity">" quantity"</string>
     <string name="app.message.addProduct.supplier">" supplier"</string>
 
+    <string name="app.message.addProduct.title">Add New Product</string>
+    <string name="app.message.updateProduct.title">Update product quantity</string>
+    <string name="app.message.deleteProduct.title">Are you sure you want to delete this product?</string>
+    <string name="app.message.saleProduct.title">Update product quantity</string>
+
     <string name="app.message.save">Save</string>
     <string name="app.message.cancel">Cancel</string>
+    <string name="app.message.update">Update</string>
+    <string name="app.message.yes">Yes</string>
+    <string name="app.message.sale">Sale</string>
 
     <string name="app.message.add">Click the add button to create new products</string>
 
