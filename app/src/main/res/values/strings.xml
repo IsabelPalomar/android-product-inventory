@@ -12,4 +12,12 @@
     <string name="tv_price">Price</string>
     <string name="tv_quantity">Quantity</string>
     <string name="tv_enter_new_quantity">Enter new quantity</string>
+
+    <string name="app.message.productInfo">%1$s - $%2$s</string>
+    <string name="app.message.productQty">Quantity available: %1$s</string>
+    <string name="app.message.productSupplier">Email Supplier: %1$s</string>
+    <string name="app.message.productEmail">Product Order -  %1$s</string>
+    <string name="app.message.productQty.updated">Product quantity updated!</string>
+    <string name="app.message.productQty.error">Error trying to update the product quantity</string>
+
 </resources>
