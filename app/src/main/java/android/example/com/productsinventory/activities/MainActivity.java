@@ -132,21 +132,6 @@ public class MainActivity extends AppCompatActivity {
         return newHabitId1;
     }
 
-    /**
-     *  Create a new map of values (testing)
-     */
-    private ContentValues generateRandomValue() {
-
-        ContentValues values = new ContentValues();
-
-        values.put(ProductsContract.ProductEntry.COLUMN_NAME_PRODUCT, "Blue t-shirt");
-        values.put(ProductsContract.ProductEntry.COLUMN_NAME_PRICE, 15.5);
-        values.put(ProductsContract.ProductEntry.COLUMN_NAME_QUANTITY, 10);
-        values.put(ProductsContract.ProductEntry.COLUMN_NAME_SUPPLIER, "Urban Outfitters");
-
-        return values;
-    }
-
 
     private static List<Product> getAllElements() {
 

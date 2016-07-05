@@ -33,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
     static Context context;
     static DetailActivity detailActivity;
     Product product;
+    static TextView productQuantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +111,7 @@ public class DetailActivity extends AppCompatActivity {
 
         ImageView ivProductImage = (ImageView) findViewById(R.id.ivProductImage);
         TextView productInfo = (TextView) findViewById(R.id.tvProductInfo);
-        TextView productQuantity = (TextView) findViewById(R.id.tvQuantity);
+        productQuantity = (TextView) findViewById(R.id.tvQuantity);
         TextView productSupplier = (TextView) findViewById(R.id.tvSupplier);
 
         byte[] productImg = product.getImage();
@@ -162,6 +163,18 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    public static void updateProductQuantity() {
+    public static void updateProductQuantity(int newQuantity) {
+        int rowsUpdated = 0;
+
+        try {
+            rowsUpdated = mDbHelper.updateQuantityById(productId, newQuantity);
+            if(rowsUpdated > 0){
+                productQuantity.setText("Quantity available: " + String.valueOf(newQuantity));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
