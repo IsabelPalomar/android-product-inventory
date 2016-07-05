@@ -41,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Button modifyQuantity = (Button) findViewById(R.id.btnModifyQuantity);
-        Button contactSuplier = (Button) findViewById(R.id.btnContactSupplier);
+        Button contactSupplier = (Button) findViewById(R.id.btnContactSupplier);
         rlDetail = (RelativeLayout) findViewById(R.id.rlDetail);
 
         Intent intent = getIntent();
@@ -50,7 +50,6 @@ public class DetailActivity extends AppCompatActivity {
         mDbHelper = new ProductsDbHelper(this);
         detailActivity = this;
         res = getResources();
-
 
         //Fetch the product information from DB using the productId
         populateDetailView(productId);
@@ -76,8 +75,8 @@ public class DetailActivity extends AppCompatActivity {
             });
         }
 
-        if (contactSuplier != null) {
-            contactSuplier.setOnClickListener(new View.OnClickListener() {
+        if (contactSupplier != null) {
+            contactSupplier.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     sendEmailToSupplier();

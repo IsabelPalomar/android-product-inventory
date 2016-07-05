@@ -8,6 +8,7 @@
     tools:context=".activities.MainActivity"
     tools:showIn="@layout/activity_main">
 
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvProducts"
         android:layout_width="match_parent"
@@ -15,4 +16,16 @@
         android:clipToPadding="false"
         android:padding="@dimen/activity_small_padding"
         android:scrollbarStyle="outsideOverlay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvAddValues"
+        android:padding="@dimen/activity_default_margin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>
