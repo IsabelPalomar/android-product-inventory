@@ -7,19 +7,17 @@ import android.database.Cursor;
 import android.example.com.productsinventory.data.Product;
 import android.example.com.productsinventory.data.source.ProductsContract;
 import android.example.com.productsinventory.data.source.ProductsDbHelper;
-import android.example.com.productsinventory.dialogs.AddProductDialog;
 import android.example.com.productsinventory.dialogs.DeleteProductDialog;
+import android.example.com.productsinventory.dialogs.UpdateProductQuantityDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.example.com.productsinventory.R;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,13 +32,17 @@ public class DetailActivity extends AppCompatActivity {
     static int productId;
     static Context context;
     static DetailActivity detailActivity;
+    Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        Button modifyQuantity = (Button) findViewById(R.id.btnModifyQuantity);
+        Button contactSuplier = (Button) findViewById(R.id.btnContactSupplier);
 
         Intent intent = getIntent();
         mDbHelper = new ProductsDbHelper(this);
@@ -51,7 +53,6 @@ public class DetailActivity extends AppCompatActivity {
 
         populateDetailView(productId);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,6 +60,42 @@ public class DetailActivity extends AppCompatActivity {
                 deleteProduct();
             }
         });
+
+        modifyQuantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                openUpdateQuantityDialog();
+            }
+        });
+
+        contactSuplier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                sendEmailToSuplier();
+            }
+        });
+
+    }
+
+    private void openUpdateQuantityDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        UpdateProductQuantityDialog editNameDialog = new UpdateProductQuantityDialog();
+        editNameDialog.show(fm, "");
+
+    }
+
+    private void sendEmailToSuplier() {
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_EMAIL, product.getSupplier());
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Product Order - " + product.getName());
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+
     }
 
     private void deleteProduct() {
@@ -69,7 +106,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void populateDetailView(int productId) {
 
-        Product product = getElementById(productId);
+        product = getElementById(productId);
 
         ImageView ivProductImage = (ImageView) findViewById(R.id.ivProductImage);
         TextView productInfo = (TextView) findViewById(R.id.tvProductInfo);
@@ -123,5 +160,8 @@ public class DetailActivity extends AppCompatActivity {
         mDbHelper.deleteElementById(productId);
         detailActivity.finish();
 
+    }
+
+    public static void updateProductQuantity() {
     }
 }

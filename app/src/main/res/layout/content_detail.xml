@@ -13,6 +13,7 @@
     tools:showIn="@layout/activity_detail">
 
     <RelativeLayout
+        android:id="@+id/rlDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/activity_default_padding">
@@ -46,6 +47,38 @@
 
 
     </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/rlDetail"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:id="@+id/linearLayout">
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Modify Quantity"
+            android:id="@+id/btnModifyQuantity"
+            android:layout_alignTop="@+id/linearLayout"
+           />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact Supplier"
+            android:id="@+id/btnContactSupplier"
+            android:layout_alignTop="@+id/linearLayout"
+            />
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>
