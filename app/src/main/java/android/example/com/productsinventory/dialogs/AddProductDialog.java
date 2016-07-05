@@ -1,4 +1,4 @@
-package android.example.com.productsinventory.fragments;
+package android.example.com.productsinventory.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

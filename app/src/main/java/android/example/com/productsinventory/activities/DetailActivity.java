@@ -1,15 +1,21 @@
 package android.example.com.productsinventory.activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.example.com.productsinventory.data.Product;
 import android.example.com.productsinventory.data.source.ProductsContract;
 import android.example.com.productsinventory.data.source.ProductsDbHelper;
+import android.example.com.productsinventory.dialogs.AddProductDialog;
+import android.example.com.productsinventory.dialogs.DeleteProductDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -24,8 +30,10 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
-    ProductsDbHelper mDbHelper;
-    int productId;
+    static ProductsDbHelper mDbHelper;
+    static int productId;
+    static Context context;
+    static DetailActivity detailActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,8 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mDbHelper = new ProductsDbHelper(this);
+        context = getApplicationContext();
+        detailActivity = this;
 
         productId  = intent.getIntExtra("productId", 0);
 
@@ -45,10 +55,16 @@ public class DetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                deleteProduct();
             }
         });
+    }
+
+    private void deleteProduct() {
+        FragmentManager fm = getSupportFragmentManager();
+        DeleteProductDialog editNameDialog = new DeleteProductDialog();
+        editNameDialog.show(fm, "");
     }
 
     private void populateDetailView(int productId) {
@@ -102,7 +118,10 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
+    public static void deleteCurrentProduct() {
 
+        mDbHelper.deleteElementById(productId);
+        detailActivity.finish();
 
-
+    }
 }

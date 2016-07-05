@@ -2,7 +2,7 @@ package android.example.com.productsinventory.activities;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.example.com.productsinventory.fragments.AddProductDialog;
+import android.example.com.productsinventory.dialogs.AddProductDialog;
 import android.example.com.productsinventory.R;
 import android.example.com.productsinventory.adapters.ProductsRecyclerAdapter;
 import android.example.com.productsinventory.data.Product;
@@ -96,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshProductsList();
     }
 
     /**

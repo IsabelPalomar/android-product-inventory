@@ -166,4 +166,12 @@ public class ProductsDbHelper extends SQLiteOpenHelper {
 
         return c;
     }
+
+    public void deleteElementById(int productId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = ProductsContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
+        String[] selectionArgs = {String.valueOf(productId)};
+        db.delete(ProductsContract.ProductEntry.TABLE_NAME, selection, selectionArgs);
+
+    }
 }
