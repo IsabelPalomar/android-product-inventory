@@ -129,4 +129,41 @@ public class ProductsDbHelper extends SQLiteOpenHelper {
 
         return count;
     }
+
+    public Cursor getProductById(int productId) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                ProductsContract.ProductEntry.COLUMN_NAME_ENTRY_ID,
+                ProductsContract.ProductEntry.COLUMN_NAME_PRODUCT,
+                ProductsContract.ProductEntry.COLUMN_NAME_PRICE,
+                ProductsContract.ProductEntry.COLUMN_NAME_QUANTITY,
+                ProductsContract.ProductEntry.COLUMN_NAME_SUPPLIER,
+                ProductsContract.ProductEntry.COLUMN_NAME_IMAGE,
+
+        };
+
+
+        String selection = "entryId = ?";
+
+        String[] selectionArgs = new String[] {
+                String.valueOf(productId),
+        };
+
+        String sortOrder =
+                ProductsContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " ASC";
+
+        Cursor c = db.query(
+                ProductsContract.ProductEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+
+        return c;
+    }
 }

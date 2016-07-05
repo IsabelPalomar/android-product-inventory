@@ -3,6 +3,8 @@ package android.example.com.productsinventory.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.example.com.productsinventory.activities.DetailActivity;
 import android.example.com.productsinventory.activities.MainActivity;
 import android.example.com.productsinventory.R;
 import android.example.com.productsinventory.data.Product;
@@ -70,7 +72,9 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
 
             @Override
             public void onClick(View view) {
-                //Start new activity
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("productId", products.get(position).getId());
+                context.startActivity(intent);
 
             }
 

@@ -102,7 +102,8 @@ public class AddProductDialog extends DialogFragment{
                     if(!productNameStr.equals("")){
 
                         double productPrice = (!productPriceStr.equals(""))? Double.parseDouble(productPriceStr): 0.0;
-                        int productQuantity = (!productQuantityStr.equals(""))? Integer.parseInt(productQuantityStr): 0;
+                        int productQuantity = (!productQuantityStr.equals(""))? Integer.parseInt(productQuantityStr): 5;
+                        String productSupplier = (!productSupplierStr.equals(""))? productSupplierStr: "sales@default.com";
 
                         Bitmap bitmap = ((BitmapDrawable)ivProductName.getDrawable()).getBitmap();
 
