@@ -14,9 +14,10 @@
 
         <ImageView
             android:id="@+id/ivProductImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/image_medium_size"
+            android:layout_height="@dimen/image_medium_size"
             android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/product_image"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher" />
 
@@ -25,21 +26,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Select Image" />
+            android:text="@string/btn_select_image" />
     </LinearLayout>
-
 
     <TextView
         android:id="@+id/errorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent" />
+        android:textColor="@color/colorRed" />
 
     <TextView
-        android:id="@+id/lbl_your_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Product name" />
+        android:text="@string/tv_product_name" />
 
     <EditText
         android:id="@+id/etProductName"
@@ -49,24 +48,21 @@
         android:inputType="text" />
 
     <TextView
-        android:id="@+id/lbl2_your_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email Supplier"
-        android:inputType="textEmailAddress"/>
+        android:text="@string/tv_email_supplier" />
 
     <EditText
         android:id="@+id/etProductSupplier"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
-        android:inputType="text" />
+        android:inputType="textEmailAddress" />
 
     <TextView
-        android:id="@+id/lbl3_your_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Price" />
+        android:text="@string/tv_price" />
 
     <EditText
         android:id="@+id/etProductPrice"
@@ -75,12 +71,10 @@
         android:ems="10"
         android:inputType="numberDecimal" />
 
-
     <TextView
-        android:id="@+id/lbl4_your_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quantity" />
+        android:text="@string/tv_quantity" />
 
     <EditText
         android:id="@+id/etProductQuantity"
@@ -88,5 +82,4 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number" />
-
 </LinearLayout>

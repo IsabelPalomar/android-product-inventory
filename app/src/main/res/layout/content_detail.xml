@@ -16,18 +16,20 @@
         android:id="@+id/rlDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_default_padding">
+        android:paddingTop="@dimen/activity_default_padding">
 
         <ImageView
             android:id="@+id/ivProductImage"
             android:layout_width="@dimen/image_size"
             android:layout_height="@dimen/image_size"
-            android:layout_margin="@dimen/activity_small_margin" />
+            android:layout_margin="@dimen/activity_small_margin"
+            android:contentDescription="@string/product_image" />
 
         <TextView
             android:id="@+id/tvProductInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/ivProductImage"
             android:layout_toRightOf="@+id/ivProductImage"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -36,49 +38,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvProductInfo"
-            android:layout_toRightOf="@+id/ivProductImage"/>
+            android:layout_toEndOf="@+id/ivProductImage"
+            android:layout_toRightOf="@+id/ivProductImage" />
 
         <TextView
             android:id="@+id/tvSupplier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvQuantity"
-            android:layout_toRightOf="@+id/ivProductImage"/>
-
+            android:layout_toEndOf="@+id/ivProductImage"
+            android:layout_toRightOf="@+id/ivProductImage" />
 
     </RelativeLayout>
 
-
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/rlDetail"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:gravity="center"
-        android:id="@+id/linearLayout">
-
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/rlDetail"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/activity_default_padding">
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Modify Quantity"
             android:id="@+id/btnModifyQuantity"
-            android:layout_alignTop="@+id/linearLayout"
-           />
-
-
-        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Contact Supplier"
-            android:id="@+id/btnContactSupplier"
-            android:layout_alignTop="@+id/linearLayout"
-            />
+            android:text="@string/modify_quantity" />
 
+        <Button
+            android:id="@+id/btnContactSupplier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/contact_supplier" />
 
     </LinearLayout>
-
 
 </RelativeLayout>

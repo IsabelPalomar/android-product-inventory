@@ -18,12 +18,14 @@
                 android:id="@+id/ivProductImage"
                 android:layout_width="@dimen/image_size"
                 android:layout_height="@dimen/image_size"
-                android:layout_margin="@dimen/activity_small_margin" />
+                android:layout_margin="@dimen/activity_small_margin"
+                android:contentDescription="@string/product_image" />
 
             <TextView
                 android:id="@+id/tvProductInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/ivProductImage"
                 android:layout_toRightOf="@+id/ivProductImage"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -32,16 +34,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvProductInfo"
-                android:layout_toRightOf="@+id/ivProductImage"/>
+                android:layout_toEndOf="@+id/ivProductImage"
+                android:layout_toRightOf="@+id/ivProductImage" />
 
             <Button
                 android:id="@+id/btnSell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sale"
                 android:layout_alignBottom="@+id/ivProductImage"
+                android:layout_marginLeft="@dimen/activity_small_margin"
+                android:layout_marginStart="@dimen/activity_small_padding"
+                android:layout_toEndOf="@+id/ivProductImage"
                 android:layout_toRightOf="@+id/ivProductImage"
-                android:layout_marginLeft="@dimen/activity_small_margin"/>
+                android:text="@string/sale" />
 
         </RelativeLayout>
 

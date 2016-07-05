@@ -8,10 +8,9 @@
     android:padding="@dimen/activity_default_padding">
 
     <TextView
-        android:id="@+id/lbl4_your_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter new quantity" />
+        android:text="@string/tv_enter_new_quantity" />
 
     <EditText
         android:id="@+id/etProductQuantity"
